@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name              Ruby rex
 // @namespace    https://greasyfork.org/ja/users/570127
-// @version      0.0.6
+// @version      0.0.7
 // @description  You can turn page by left and right key shortcut. 左右のキーで、ページを移動できます。
 // @author       universato
 // @license      MIT
@@ -17,8 +17,6 @@
       }else if(event.key === 'ArrowRight'){
           elements = document.getElementsByClassName('btn btn-w-md btn-gap-v btn-default pull-right');
       }
-      if (elements[1]){
-          elements[1].click();
-      }
+      elements[1]?.click();
   });
 })();
