@@ -2,7 +2,7 @@
 // @name         fjord_bootcamp_keyboard_pagination
 // @name:ja      フィヨルドブートキャンプ･キーページネーション
 // @namespace    https://greasyfork.org/ja/users/570127
-// @version      0.1.8
+// @version      0.1.9
 // @description  Fjord Bootcampで左右のキーで移動できるようになります
 // @description:ja  Fjord Bootcampで左右のキーで移動できるようになります
 // @author       universato
@@ -14,7 +14,7 @@
 (function() {
     document.addEventListener('keydown', function (event) {
         const activeTagName = document.activeElement.tagName;
-        if (['TEXTAREA', 'INPUT'].includes(activeTagName)){ return; }
+        if (activeTagName.match(/^(INPUT|TEXTAREA)$/)) { return; }
 
         let element;
         const pathnames = location.pathname.split('/');
