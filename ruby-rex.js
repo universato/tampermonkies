@@ -1,8 +1,10 @@
 // ==UserScript==
-// @name              Ruby rex
+// @name         Ruby REx
+// @name:ja      RExのページ移動をキーボード操作で
 // @namespace    https://greasyfork.org/ja/users/570127
-// @version      0.0.7
+// @version      0.0.8
 // @description  You can turn page by left and right key shortcut. 左右のキーで、ページを移動できます。
+// @description:ja RExで、右キーで｢解答する｣、左キーで｢前の問題へ｣となります。
 // @author       universato
 // @license      MIT
 // @match        https://rex.libertyfish.co.jp/exam_histories/*
@@ -11,12 +13,10 @@
 
 (function() {
   document.addEventListener('keydown', function (event) {
-      let elements = []
       if (event.key === 'ArrowLeft'){
-          elements = document.getElementsByClassName('btn btn-w-md btn-gap-v btn-default pull-left');
+          document.querySelector('a.pull-left').click(); // 前の問題へ
       }else if(event.key === 'ArrowRight'){
-          elements = document.getElementsByClassName('btn btn-w-md btn-gap-v btn-default pull-right');
+          document.querySelector('input.pull-right').click(); // 解答する
       }
-      elements[1]?.click();
   });
 })();
