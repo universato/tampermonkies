@@ -2,7 +2,7 @@
 // @name         algo-method-shorcut
 // @name:ja      アルゴ式ショートカット
 // @namespace    https://greasyfork.org/ja/users/570127
-// @version      0.0.5
+// @version      1.0.0
 // @description  アルゴ式でCtrl＋Enterで、コードテストになります。
 // @description:ja  アルゴ式でCtrl＋Enterで、コードテストになります。
 // @author       universato

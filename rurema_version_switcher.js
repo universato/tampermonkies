@@ -1,14 +1,15 @@
 // ==UserScript==
 // @name          Ruby reference manaul version switcher
 // @name:ja      るりまバージョンスイッチャー for Rubyリファレンスマニュアル
-// @namespace     http://tampermonkey.net/
-// @version       1.1.0
+// @namespace     https://greasyfork.org/ja/users/570127
+// @version       1.1.2
 // @description    Switch version of Ruby reference manual by key shortcut
 // @description:ja  るりまのバージョンをキーボードのショートカットで切り替えます
 // @author        universato
 // @match         https://docs.ruby-lang.org/ja/*/*.html
 // @match         https://docs.ruby-lang.org/en/*/*.html
 // @icon          https://www.google.com/s2/favicons?sz=64&domain=ruby-lang.org
+// @license       MIT
 // @grant         none
 // ==/UserScript==
 
@@ -22,7 +23,7 @@ function rurema_version(version){
     else if(version === '1.9'){ return '1.9.3' }
     else if(version.match(/2\.[0-7]/)){ return version + '.0'; }
     else if(version.match(/2\.[7-9]/)){ return '2.7.0'; }
-    else if(version.match(/3\.[0-2]/)){ return version; }
+    else if(version.match(/3\.[0-3]/)){ return version; }
     else{ return 'master' }
 }
 
@@ -42,6 +43,7 @@ const VERSIONS = {
     3.0: '3.0',
     3.1: '3.1',
     3.2: '3.2',
+    3.3: '3.3',
 }
 
 var key_input = "";
@@ -58,6 +60,8 @@ var key_input = "";
            key_input = '';
            return false;
        }
+
+       if(event.ctrlKey || event.metaKey){ return false; }
 
       // 入力はいったん最後の3文字以内にする
       key_input = (key_input + event.key).slice(-3);
