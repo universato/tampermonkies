@@ -2,7 +2,7 @@
 // @name          Quizbar Suahl Switcher
 // @name:ja       クイズバースアールのカレンダーのショートカット
 // @namespace    https://greasyfork.org/ja/users/570127
-// @version      1.0.1
+// @version      1.0.2
 // @description    Switch Area of Quizbar Suahl by key shortcut
 // @description:ja   クイズバースアールのカレンダーのキーボードショートカット
 // @author       universato
@@ -48,15 +48,15 @@
       const paths = location.pathname.split('/');
       const current_location = paths[1];
 
-     let next_location;
-     if(event.key === 'a'){
+      let next_location;
+      if(event.key === 'a'){
           next_location = 'quizbar-suahl-akihabara'
       }else if(event.key === 'i'){
           next_location = 'quizbar-suahl-ikebukuro'
       }else if(event.key === 'o'){
           next_location = 'quizbar-suahl-osaka'
       }else if(event.key === 'n'){
-           next_location = 'quizbar-suahl-nagoya'
+          next_location = 'quizbar-suahl-nagoya'
       }else{
           return false;
       }

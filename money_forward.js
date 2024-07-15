@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MoneyFoward
 // @namespace    https://greasyfork.org/ja/users/570127
-// @version      0.4.0
+// @version      0.4.1
 // @description  MoneyFoward MEを便利にするユーザースクリプト
 // @description:ja MoneyFoward MEを便利にするユーザースクリプト
 // @author       universato
@@ -115,9 +115,9 @@ function hiddenZeros(){
   if(cfDetailTable){
       const rows = document.querySelectorAll(".transaction_list.js-cf-edit-container");
       for(const row of rows){
-         if(row.children[3].innerText === '0'){
-             row.style.display = "none";
-         }
+          if(row.children[3].innerText === '0'){
+              row.style.display = "none";
+          }
       }
   }
 }
@@ -127,9 +127,9 @@ function hiddenSmalls(){
   if(cfDetailTable){
       const rows = document.querySelectorAll(".transaction_list.js-cf-edit-container");
       for(const row of rows){
-         if(Math.abs(numberFromCell(row.children[3])) < 1000){
-             row.style.display = "none";
-         }
+          if(Math.abs(numberFromCell(row.children[3])) < 1000){
+              row.style.display = "none";
+          }
       }
   }
 }

@@ -2,7 +2,7 @@
 // @name          Ruby reference manaul version switcher
 // @name:ja      るりまバージョンスイッチャー for Rubyリファレンスマニュアル
 // @namespace     https://greasyfork.org/ja/users/570127
-// @version       1.1.2
+// @version       1.1.3
 // @description    Switch version of Ruby reference manual by key shortcut
 // @description:ja  るりまのバージョンをキーボードのショートカットで切り替えます
 // @author        universato
@@ -56,12 +56,12 @@ var key_input = "";
       const invalid_input = event.key.match(/[^0-9.lm]/);
 
       // テキストエリア内の入力、数字・ドット以外の入力であれば、終了。
-       if(in_textarea || invalid_input){
-           key_input = '';
-           return false;
-       }
+      if(in_textarea || invalid_input){
+          key_input = '';
+          return false;
+      }
 
-       if(event.ctrlKey || event.metaKey){ return false; }
+      if(event.ctrlKey || event.metaKey){ return false; }
 
       // 入力はいったん最後の3文字以内にする
       key_input = (key_input + event.key).slice(-3);
@@ -95,8 +95,8 @@ var key_input = "";
           return false;
       }
 
-     // 1.0 ~ 4.9のときに限り、バージョンを変更する。
-     if(key_input.match(/[1-4]\.[0-9]/)){
+      // 1.0 ~ 4.9のときに限り、バージョンを変更する。
+      if(key_input.match(/[1-4]\.[0-9]/)){
           location.href = location.href.replace(current_version, rurema_version(key_input));
       }else if(event.key === 'l' && language === 'ja'){
           location.href = location.href.replace(current_version, 'latest')
