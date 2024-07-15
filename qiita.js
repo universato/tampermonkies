@@ -4,6 +4,7 @@
 // @description  Qiita記事へのリンクをMarkdown記法で生成する
 // @author       universato
 // @match        https://qiita.com/*/items/*
+// @match        https://qiita.com/*
 // ==/UserScript==
 
 // fukuchan-sanの動かなくなっていたユーザースクリプトを修正した上で、クリックだけで動作するようにした。
@@ -16,23 +17,57 @@
 
 "use strict;"
 
-const span = document.createElement("span");
-span.classList.add("fa", "fa-link");
+const paths = location.pathname.split('/');
 
-const div = document.createElement("div");
-div.classList.add("css-ag7bw5");
-div.append(span);
-// div.addEventListener("click", () => prompt(document.title, `[${document.title}](${location.href})`));
+if(paths[2] === "items"){
+    const span = document.createElement("span");
+    span.classList.add("fa", "fa-link");
 
-const container = document.querySelector(".css-yrmhnf");
+    const div = document.createElement("div");
+    div.classList.add("css-ag7bw5");
+    div.append(span);
+    // div.addEventListener("click", () => prompt(document.title, `[${document.title}](${location.href})`));
 
-// navigator.clipboardが使えるときだけ、アイコンを追加する。iOSでは使えないらしい。
-if(navigator.clipboard){
-  container.append(div);
+    const container = document.querySelector(".css-yrmhnf");
+
+    // navigator.clipboardが使えるときだけ、アイコンを追加する。iOSでは使えないらしい。
+    if(navigator.clipboard){
+      container.append(div);
+    }
+
+    // クリップボードへコピー
+    div.addEventListener('click', () => {
+      const tagValue = `[${document.title}](${location.href})`;
+      navigator.clipboard.writeText(tagValue).then(function () {});
+    })
 }
 
-// クリップボードへコピー
-div.addEventListener('click', () => {
-  const tagValue = `[${document.title}](${location.href})`;
-  navigator.clipboard.writeText(tagValue).then(function () {});
-})
+// Shortcuts to switch version by key
+(function() {
+  'use strict';
+  document.addEventListener('keydown', function (event) {
+      const activeTagName = document.activeElement.tagName;
+      const in_textarea = ['TEXTAREA', 'INPUT'].includes(activeTagName);
+      const invalid_input = event.key.match(/[^dgnps]/);
+       if(in_textarea || invalid_input){ return false; }
+
+      if(paths[2] === 'new' || paths[3] === 'edit'){ return false }
+
+      const user_id = document.querySelector('.st-NewHeader_loginUser > img').alt;
+
+     // const paths = location.pathname.split('/');
+      //const current_version = paths[2];
+
+      if(event.ctrlKey || event.metaKey){ return false; }
+
+     if(event.key.match(/[ds]/)){
+          // drafts, 下書き(shitagaki)
+          location.href = "https://qiita.com/drafts";
+      }else if(event.key.match(/[gp]/)){
+          // private, 限定公開(gentei kokai)
+          location.href = `https://qiita.com/${user_id}/private`;
+      }else if(event.key === 'n'){
+          location.href = 'https://qiita.com/drafts/new';
+      }
+  }, false);
+})();
