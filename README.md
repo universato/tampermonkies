@@ -71,8 +71,7 @@ location.pathname.split('/'); // ['', 'path', 'to']
 `/`始まりの`string`が返ってくる。  
 `split('/')`とすると、0番目の要素は空文字列になる。  
 
-### 
-
+### 古いincludeと今のmatch
 
 ```js
 // @include
@@ -82,14 +81,14 @@ location.pathname.split('/'); // ['', 'path', 'to']
 `@include`は古くて安全ではないらしい。  
 `@match`でURLの対象を決める。
 
-### 備忘
+### 非推奨のKeyCode
 
 キー入力によるショーットカットを作る際の注意事項。
 
-`keCode`は非推奨。  
+`keyCode`は非推奨。  
 数値だけ見ててもわかりにくいからね、積極的に変更していきたい。
 
-[keyCode が deprecated になってた](http://var.blog.jp/archives/70803410.html)
+2017年6月3日 [keyCode が deprecated になってた](http://var.blog.jp/archives/70803410.html)
 
 ```js
 event.keyCode === 37        // deprecated
