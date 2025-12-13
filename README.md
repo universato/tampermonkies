@@ -129,6 +129,8 @@ Copyボタンクリックだと、`uncaught (in promise) DOMException: Document 
 見えないところに`a.btn.btn-primary`のタグが別にあることがあったので、
 `Run|実行`と書かれたものをボタンとしてクリックする。
 
+Macは「⌘ + Enter」と表記するようにしようと思ったが、Ctrl+Enterでも実行できるため、わざわざ表現を変えるような実装は必要ないかもしれない。
+
 
 ### REx
 
