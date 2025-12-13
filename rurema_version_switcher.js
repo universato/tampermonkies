@@ -2,7 +2,7 @@
 // @name          Ruby reference manaul version switcher
 // @name:ja      るりまバージョンスイッチャー for Rubyリファレンスマニュアル
 // @namespace     https://greasyfork.org/ja/users/570127
-// @version       1.1.3
+// @version       2025.12.14.1
 // @description    Switch version of Ruby reference manual by key shortcut
 // @description:ja  るりまのバージョンをキーボードのショートカットで切り替えます
 // @author        universato
@@ -20,11 +20,11 @@
 // '3.1' -> '3.1'
 function rurema_version(version){
     if(version.match(/1\.[0-8]/)){ return '1.8.7'; }
-    else if(version === '1.9'){ return '1.9.3' }
+    else if(version === '1.9'){ return '1.9.3'; }
     else if(version.match(/2\.[0-7]/)){ return version + '.0'; }
     else if(version.match(/2\.[7-9]/)){ return '2.7.0'; }
-    else if(version.match(/3\.[0-3]/)){ return version; }
-    else{ return 'master' }
+    else if(version.match(/3\.[0-5]/)){ return version; }
+    else{ return 'master'; }
 }
 
 const VERSIONS = {
@@ -44,7 +44,10 @@ const VERSIONS = {
     3.1: '3.1',
     3.2: '3.2',
     3.3: '3.3',
-}
+    3.4: '3.4',
+    3.5: '3.5',
+};
+
 
 var key_input = "";
 
@@ -84,14 +87,14 @@ var key_input = "";
       else if(current_version === 'latest'){}
       else if(current_version.match(/[1-9]\.[0-9](\.[0-9])?/)){}
       else{
-          console.log("[version switcher] not version url ")
+          console.log("[version switcher] not version url");
           key_input = '';
           return false;
       }
 
       // 英語版ドキュメントはversion 1.xがなさそうなので、終了する。
       if(language === 'en' && key_input.match(/1\.[0-9]/)){
-          console.log("[version switcher] en don't support 1.x ")
+          console.log("[version switcher] en don't support 1.x ");
           return false;
       }
 
@@ -99,9 +102,9 @@ var key_input = "";
       if(key_input.match(/[1-4]\.[0-9]/)){
           location.href = location.href.replace(current_version, rurema_version(key_input));
       }else if(event.key === 'l' && language === 'ja'){
-          location.href = location.href.replace(current_version, 'latest')
+          location.href = location.href.replace(current_version, 'latest');
       }else if(event.key === 'm'){
-          location.href = location.href.replace(current_version, 'master')
+          location.href = location.href.replace(current_version, 'master');
       }
   }, false);
 })();
