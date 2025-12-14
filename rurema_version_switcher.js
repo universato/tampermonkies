@@ -2,7 +2,7 @@
 // @name          Ruby reference manaul version switcher
 // @name:ja      るりまバージョンスイッチャー for Rubyリファレンスマニュアル
 // @namespace     https://greasyfork.org/ja/users/570127
-// @version       2025.12.14.1
+// @version       2025.12.14.2
 // @description    Switch version of Ruby reference manual by key shortcut
 // @description:ja  るりまのバージョンをキーボードのショートカットで切り替えます
 // @author        universato
@@ -16,6 +16,7 @@
 // en: master, 2.0.0 ~ 2.7.0, 3.0 ~
 // ja: en + latest, 1.8.7, 1.9.3
 
+// '1.9' -> '1.9.3'
 // '2.6' -> '2.6.0'
 // '3.1' -> '3.1'
 function rurema_version(version){
@@ -27,6 +28,7 @@ function rurema_version(version){
     else{ return 'master'; }
 }
 
+// Unused Constant
 const VERSIONS = {
     1.8: '1.8.7',
     1.9: '1.9.7',

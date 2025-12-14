@@ -2,7 +2,7 @@
 // @name         Gmail pagination Key Shortcut
 // @name:ja      Gmailページネーション キーショートカット
 // @namespace    https://greasyfork.org/ja/users/570127
-// @version      2025.12.14.1
+// @version      2025.12.14.4
 // @description  paginate Gmail by arrow keys
 // @description:ja  Gmailで左右のキーでメールを移動します。
 // @author       universato
@@ -11,33 +11,30 @@
 // @supportURL   https://twitter.com/universato
 // ==/UserScript==
 
+console.log("【UserScript】Gmail pagination Key Shortcut");
+
 (function () {
   document.addEventListener('keydown', function (event) {
     // 入力中は無視
     const tag = document.activeElement.tagName;
     if (/^(INPUT|TEXTAREA)$/.test(tag)) return;
 
-    const isInbox =
-      location.href === 'https://mail.google.com/mail/u/0/#inbox';
-
     /* =====================
-       Inbox（一覧画面）
+       Inbox(一覧画面)
        ===================== */
-    if (isInbox) {
+    if (location.href === 'https://mail.google.com/mail/u/0/#inbox') {
       let element = null;
 
       if (event.key === 'ArrowLeft') {
-        element = document.getElementById(':m9'); // 前
-      }
-
-      if (event.key === 'ArrowRight') {
-        element = document.getElementById(':ma'); // 次
+        element = document.getElementById(':m9');
+      } else if (event.key === 'ArrowRight') {
+        element = document.getElementById(':ma');
       }
 
       if (!element) return;
 
       // Inbox は Gmail の keydown を殺さない
-      // （capture も preventDefault もしない）
+      // (capture も preventDefault もしない)
 
       element.focus();
       ['mousedown', 'mouseup', 'click'].forEach(type => {
@@ -49,7 +46,7 @@
         );
       });
 
-      return; // ★ Inbox 処理はここで終了
+      return;
     }
 
     /* =====================
@@ -58,23 +55,11 @@
     let element = null;
 
     if (event.key === 'ArrowLeft') {
-      element = document.querySelector(
-        'div.T-I.J-J5-Ji.adg.T-I-awG.T-I-ax7.T-I-Js-IF.L3'
-      );
+      element = document.querySelector('div.T-I.J-J5-Ji.adg.T-I-awG.T-I-ax7.T-I-Js-IF.L3');
+    } else if (event.key === 'ArrowRight') {
+      element = document.querySelector('div.T-I.J-J5-Ji.adg.T-I-awG.T-I-ax7.T-I-Js-Gs.L3');
     }
 
-    if (event.key === 'ArrowRight') {
-      element = document.querySelector(
-        'div.T-I.J-J5-Ji.adg.T-I-awG.T-I-ax7.T-I-Js-Gs.L3'
-      );
-    }
-
-    if (!element) return;
-
-    // 個別表示では Arrow の既存挙動を潰す
-    event.preventDefault();
-    event.stopPropagation();
-
-    element.click();
-  }, false); // ★ bubble フェーズ
+    element?.click();
+  }, false);
 })();
