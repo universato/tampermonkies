@@ -3,7 +3,7 @@
 // @name:ja      クイズバースアール店舗切り替えショートカット
 // @name:en      Quizbar Suahl Switcher: クイズバースアール店舗切り替えショートカット
 // @namespace    https://greasyfork.org/ja/users/570127
-// @version      2025.12.14.18
+// @version      2025.12.20.7
 // @description  クイズバースアールの予約カレンダー等の切り替えキーボードショートカット a:秋葉原, i:池袋, k:蒲田, o:大阪, n:名古屋, d:日, w:週
 // @description:ja クイズバースアールの予約カレンダー等の切り替えキーボードショートカット a:秋葉原, i:池袋, k:蒲田, o:大阪, n:名古屋, d:日, w:週
 // @description:en Switch Area of Quizbar Suahl (@Japan) by key shortcut
@@ -14,6 +14,8 @@
 // @license      MIT
 // @grant        none
 // ==/UserScript==
+
+console.log(`【UserScript】Quizbar Suahl Switcher (hostname: ${location.hostname})`);
 
 // Shortcuts to switch by shortcut key
 (function() {
@@ -33,35 +35,35 @@
 
     const paths = location.pathname.split('/');
 
-    // airrsv.netの個別ページは、キーショットカットが動作しないように除外する。
+    // airrsv.netの個別ページは、キーショートカットが動作しないように除外する。
     // true  ← 一覧:airrsv.net/quizbar-suahl-akihabara/calendar
     // false ← 個別:airrsv.net/quizbar-suahl-akihabara/calendar/menuDetail/?schdlId=T003D81DDC
     if(location.hostname === 'airrsv.net' && !paths[2].match(/calendar|policy|contact/) && paths[3] === 'menuDetail'){
-      return false;
+      return;
     }
 
     // テキストエリア内の入力であれば、終了。
     const activeTagName = document.activeElement.tagName;
     const inTextarea = ['TEXTAREA', 'INPUT'].includes(activeTagName);
-    if(inTextarea){ return false; }
+    if(inTextarea){ return; }
 
-    if(event.ctrlKey || event.metaKey){ return false; }
+    if(event.ctrlKey || event.metaKey){ return; }
 
-    const invalidInput = event.key.match(/^[^aikondw]$/); // a:秋葉原, i:池袋, k:蒲田, o:大阪, n:名古屋, d:日, w:週
-    if(invalidInput){ return false; }
+    // a:秋葉原, i:池袋, k:蒲田, o:大阪, n:名古屋, d:日, w:週
+    const allowedKeys = ['a','i','k','o','n','d','w','ArrowLeft','ArrowRight'];
+    if (!allowedKeys.includes(event.key)) return;
 
-    if (event.key === 'ArrowLeft'){
-      document.querySelector('li.ctlListItem.listPrev')?.click();
-      return;
-    }else if(event.key === 'ArrowRight'){
-      document.querySelector('li.ctlListItem.listNext')?.click();
-      return;
-    }else if(event.key === 'd'){
-      document.querySelector('#btnDay')?.click();
-      return;
-    }else if(event.key === 'w'){
-      document.querySelector('#btnWeek')?.click();
-      return;
+    const actionMap = {
+        ArrowLeft: 'li.ctlListItem.listPrev',
+        ArrowRight: 'li.ctlListItem.listNext',
+        d: '#btnDay',
+        w: '#btnWeek',
+    };
+
+    const selector = actionMap[event.key];
+    if(selector){
+        document.querySelector(selector)?.click();
+        return;
     }
 
     let currentLocation;
@@ -72,7 +74,8 @@
     }
 
     const nextLocation = locationMap[event.key];
-    if(!currentLocation || !nextLocation){ return false; }
+    if(!currentLocation || !nextLocation){ return; }
+    if(currentLocation === nextLocation){ return; }
 
     location.href = location.href.replace(currentLocation, nextLocation);
 
