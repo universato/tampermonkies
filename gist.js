@@ -2,7 +2,7 @@
 // @name         improved_gist_pager
 // @name:ja      gistページネーション
 // @namespace    https://greasyfork.org/ja/users/570127
-// @version      0.2.6
+// @version      2025.12.25
 // @description  You can move on page by pressing the left and right key.
 // @description:ja ページャーをつけ、十字キーの左右で1ページ移動できます。
 // @author       universato
@@ -104,12 +104,16 @@ function addPager(){
 // Add shortcuts to turn page by left and right kye
 (function() {
     document.addEventListener('keydown', function (event) {
-        if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') {
-           return;
-        }
+        if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
 
-        const activeTagName = document.activeElement.tagName;
-        if (['TEXTAREA', 'INPUT'].includes(activeTagName)){ return; }
+        if (event.ctrlKey || event.metaKey || event.altKey) return;
+        if (event.isComposing) return;
+        if (event.repeat) return;
+
+        const activeElement = document.activeElement;
+        if (activeElement.isContentEditable) return;
+        if (activeElement.tagName === 'INPUT') return;
+        if (activeElement.tagName === 'TEXTAREA') return;
 
         const pager_elements = document.querySelectorAll('.pagination a');
         if (pager_elements.length === 0) { return; }

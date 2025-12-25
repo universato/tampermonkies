@@ -3,7 +3,7 @@
 // @name:ja      クイズバースアール店舗切り替えショートカット
 // @name:en      Quizbar Suahl Switcher: クイズバースアール店舗切り替えショートカット
 // @namespace    https://greasyfork.org/ja/users/570127
-// @version      2025.12.20.7
+// @version      2025.12.25.0
 // @description  クイズバースアールの予約カレンダー等の切り替えキーボードショートカット a:秋葉原, i:池袋, k:蒲田, o:大阪, n:名古屋, d:日, w:週
 // @description:ja クイズバースアールの予約カレンダー等の切り替えキーボードショートカット a:秋葉原, i:池袋, k:蒲田, o:大阪, n:名古屋, d:日, w:週
 // @description:en Switch Area of Quizbar Suahl (@Japan) by key shortcut
@@ -43,11 +43,14 @@ console.log(`【UserScript】Quizbar Suahl Switcher (hostname: ${location.hostna
     }
 
     // テキストエリア内の入力であれば、終了。
-    const activeTagName = document.activeElement.tagName;
-    const inTextarea = ['TEXTAREA', 'INPUT'].includes(activeTagName);
-    if(inTextarea){ return; }
+    const activeElement = document.activeElement;
+    if (activeElement.isContentEditable) return;
+    if (activeElement.tagName === 'INPUT') return;
+    if (activeElement.tagName === 'TEXTAREA') return;
 
-    if(event.ctrlKey || event.metaKey){ return; }
+    if (event.ctrlKey || event.metaKey || event.altKey) return;
+    if (event.isComposing) return;
+    if (event.repeat) return;
 
     // a:秋葉原, i:池袋, k:蒲田, o:大阪, n:名古屋, d:日, w:週
     const allowedKeys = ['a','i','k','o','n','d','w','ArrowLeft','ArrowRight'];

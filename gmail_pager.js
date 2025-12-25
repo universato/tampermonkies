@@ -2,7 +2,7 @@
 // @name         Gmail pagination Key Shortcut
 // @name:ja      Gmailページネーション キーショートカット
 // @namespace    https://greasyfork.org/ja/users/570127
-// @version      2025.12.14.4
+// @version      2025.12.25.1
 // @description  paginate Gmail by arrow keys
 // @description:ja  Gmailで左右のキーでメールを移動します。
 // @author       universato
@@ -15,9 +15,13 @@ console.log("【UserScript】Gmail pagination Key Shortcut");
 
 (function () {
   document.addEventListener('keydown', function (event) {
-    // 入力中は無視
-    const tag = document.activeElement.tagName;
-    if (/^(INPUT|TEXTAREA)$/.test(tag)) return;
+    if (event.ctrlKey || event.metaKey || event.altKey) return;
+    if (event.isComposing) return;
+    if (event.repeat) return;
+    if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+    const activeElement = document.activeElement;
+    if (activeElement.isContentEditable) return;
+    if (/^(INPUT|TEXTAREA)$/.test(activeElement.tagName)) return;
 
     /* =====================
        Inbox(一覧画面)

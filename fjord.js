@@ -2,7 +2,7 @@
 // @name         Fjord Bootcamp Keyboard Pagination
 // @name:ja      フィヨルドブートキャンプ･キーページネーション
 // @namespace    https://greasyfork.org/ja/users/570127
-// @version      2025.12.14
+// @version      2025.12.25.1
 // @description  Fjord Bootcampで左右のキーで移動できるようになります
 // @description:ja  Fjord Bootcampで左右のキーで移動できるようになります
 // @author       universato
@@ -13,8 +13,13 @@
 
 (function() {
     document.addEventListener('keydown', function (event) {
-        const activeTagName = document.activeElement.tagName;
-        if (activeTagName.match(/^(INPUT|TEXTAREA)$/)) { return; }
+        if (!['ArrowLeft', 'ArrowRight'].includes(event.key)) { return; }
+
+        const activeElement = document.activeElement;
+        if (activeElement.isContentEditable) { return; }
+        if (/^(INPUT|TEXTAREA)$/.test(activeElement.tagName)) { return; }
+
+        if (event.ctrlKey || event.metaKey || event.altKey) { return; }
 
         let element;
         const pathnames = location.pathname.split('/');

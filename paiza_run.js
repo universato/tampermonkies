@@ -2,7 +2,7 @@
 // @name         Paiza Run Shortcut
 // @name:ja      Paiza.io実行ショートカット
 // @namespace    https://greasyfork.org/ja/users/570127
-// @version      2025.12.22.0
+// @version      2025.12.25.0
 // @description  You can run the code by using Ctrl + Enter in paiza.io
 // @description:ja paiza.ioの画面全体でCtrl+Enterを用い実行できます。
 // @author       universato
@@ -14,6 +14,12 @@
 
 (function() {
     document.addEventListener('keydown', function (event) {
+        if (event.key !== 'Enter') return;
+        if (event.altKey || event.shiftKey) return;
+        if (event.isComposing) return;
+        if (event.repeat) return;
+
+        // Mac: control -> ctrlKey, command -> metaKey
         if ((event.ctrlKey || event.metaKey) && event.key === 'Enter'){
             document.querySelector('.submit-button')?.click();
         }
