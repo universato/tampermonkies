@@ -2,12 +2,14 @@
 // @name         Paiza Run Shortcut
 // @name:ja      Paiza.io実行ショートカット
 // @namespace    https://greasyfork.org/ja/users/570127
-// @version      2025.12.25.0
+// @version      2025.12.25.2
 // @description  You can run the code by using Ctrl + Enter in paiza.io
 // @description:ja paiza.ioの画面全体でCtrl+Enterを用い実行できます。
 // @author       universato
 // @grant        none
 // @match        https://paiza.io/projects/*
+// @match        https://paiza.io/*/projects/*
+// @icon         https://greasyfork.s3.us-east-2.amazonaws.com/102pi711qso33k7hbdbtf5hd6zm9
 // @license      MIT
 // @supportURL   https://x.com/universato
 // ==/UserScript==

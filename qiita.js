@@ -1,10 +1,13 @@
 // ==UserScript==
 // @name         Qiita記事マークダウンリンク生成
-// @version      2024.7.15
+// @version      2025.12.25.0
+// @namespace    https://greasyfork.org/ja/users/570127
 // @description  Qiita記事へのリンクをMarkdown記法で生成する
 // @author       universato
 // @match        https://qiita.com/*/items/*
 // @match        https://qiita.com/*
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=qiita.com
+// @license      MIT
 // ==/UserScript==
 
 // fukuchan-sanの動かなくなっていたユーザースクリプトと同じアイディア。
@@ -19,35 +22,75 @@
 // さらにキーショートカットでコピーしたり移動できるようにした。
 // ログインユーザー名が取得しにくくなってた。
 
-"use strict";
+console.log('[Qiita MD] script loaded');
 
-const paths = location.pathname.split('/');
+(function () {
+  'use strict';
 
-window.onload = function() {
-  // ページがロードされたら実行するコード
+  const ID = 'qiita-md-button';
 
-  if(paths[2] === "items"){
-    const md_copy_div = document.createElement('div');
-    md_copy_div.textContent = 'MD';
-
-    // ここのHTMLタグが変わりやすい。
-    const container = document.querySelector("section.style-1hl01qi");
-
-    // navigator.clipboardが使えるときだけ、アイコンを追加する。iOSでは使えないらしい。
-    if(navigator.clipboard){
-      container.append(md_copy_div);
-    }
-
-    md_copy_div.addEventListener('click', () => {
-      const markdown_link = `[${document.title}](${location.href})`;
-      navigator.clipboard.writeText(markdown_link);
-    })
+  function copyMarkdown() {
+    const markdown = `[${document.title}](${location.href})`;
+    navigator.clipboard.writeText(markdown);
+    console.log('[Qiita MD] copied:', markdown);
   }
-};
+
+  function injectMD() {
+    // 記事ページのみ
+    if (!location.pathname.includes('/items/')) return;
+
+    // 二重挿入防止
+    if (document.getElementById(ID)) return;
+
+    // はてなブックマークの <a>
+    const hatenaLink = document.querySelector(
+      'a[href^="https://b.hatena.ne.jp/entry/"]'
+    );
+    if (!hatenaLink) return;
+
+    // はてブを包んでいる div.style-3fim88
+    const hatenaItem = hatenaLink.closest('div.style-3fim88');
+    if (!hatenaItem) return;
+
+    // ===== MD 用の「同列 div」を作る =====
+    const mdItem = document.createElement('div');
+    mdItem.className = hatenaItem.className; // ← ★完全に同列にする決定打
+
+    const mdButton = document.createElement('button');
+    mdButton.id = ID;
+    mdButton.textContent = 'MD';
+
+    // Qiita 既存 UI と干渉しない最小スタイル
+    mdButton.style.fontSize = '12px';
+    mdButton.style.padding = '4px';
+    mdButton.style.cursor = 'pointer';
+
+    mdButton.addEventListener('click', copyMarkdown);
+
+    mdItem.appendChild(mdButton);
+
+    // はてブの「直下」に挿入
+    hatenaItem.after(mdItem);
+
+    console.log('[Qiita MD] injected under hatena');
+  }
+
+  // SPA / React 対策
+  const observer = new MutationObserver(injectMD);
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true,
+  });
+
+  injectMD();
+})();
+
 
 // Shortcuts to switch version by key
 (function() {
   document.addEventListener('keydown', function (event) {
+      const paths = location.pathname.split('/');
+
       const activeTagName = document.activeElement.tagName;
       const in_textarea = ['TEXTAREA', 'INPUT'].includes(activeTagName);
       const invalid_input = event.key.match(/[^mdnps]/);

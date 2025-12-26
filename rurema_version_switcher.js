@@ -11,8 +11,6 @@
 // @icon          https://www.google.com/s2/favicons?sz=64&domain=ruby-lang.org
 // @license       MIT
 // @grant         none
-// @downloadURL https://update.greasyfork.org/scripts/500677/%E3%82%8B%E3%82%8A%E3%81%BE%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E3%82%B9%E3%82%A4%E3%83%83%E3%83%81%E3%83%A3%E3%83%BC%20for%20Ruby%E3%83%AA%E3%83%95%E3%82%A1%E3%83%AC%E3%83%B3%E3%82%B9%E3%83%9E%E3%83%8B%E3%83%A5%E3%82%A2%E3%83%AB.user.js
-// @updateURL https://update.greasyfork.org/scripts/500677/%E3%82%8B%E3%82%8A%E3%81%BE%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E3%82%B9%E3%82%A4%E3%83%83%E3%83%81%E3%83%A3%E3%83%BC%20for%20Ruby%E3%83%AA%E3%83%95%E3%82%A1%E3%83%AC%E3%83%B3%E3%82%B9%E3%83%9E%E3%83%8B%E3%83%A5%E3%82%A2%E3%83%AB.meta.js
 // ==/UserScript==
 
 // en: master, 2.0.0 ~ 2.7.0, 3.0 ~

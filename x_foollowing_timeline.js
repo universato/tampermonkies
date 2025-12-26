@@ -2,10 +2,10 @@
 // @name         X:Following Timeline
 // @name:ja      X:フォローTL
 // @namespace    https://greasyfork.org/ja/users/570127
-// @version      1.6.0
+// @version      1.6.2
 // @description  Switch to "Following" once, and cycle Home tabs with ← →
 // @description:ja  「フォロー中」を最初のTLとして 左右矢印キーでタブ移動。
-// @match        https://x.com/home*
+// @match        https://x.com/*
 // @grant        none
 // @license      MIT
 // ==/UserScript==
@@ -39,17 +39,6 @@
     }
 
     tabs[1].click();
-    return;
-
-    const followingTab = tabs.find(tab => {
-      const label = tab.textContent || '';
-      return FOLLOWING_LABELS.some(l => label === l || label.includes(l));
-    });
-
-    if (!followingTab) return;
-    if (followingTab.getAttribute('aria-selected') === 'true') return;
-
-    followingTab.click();
   }
 
   switchToFollowingOnce();
@@ -57,12 +46,16 @@
   /* ========= arrow key navigation ========= */
 
   document.addEventListener('keydown', (event) => {
-    const activeElement = document.activeElement;
-    if (activeElement?.isContentEditable) return;
-    const activeTag = activeElement?.tagName;
-    if (activeTag === 'INPUT' || activeTag === 'TEXTAREA') return;
-    if (event.ctrlKey || event.metaKey || event.altKey) return;
     if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+
+    if (event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) return;
+    if (event.isComposing) return;
+    if (event.repeat) return;
+
+    const activeElement = document.activeElement;
+    if (activeElement.isContentEditable) return;
+    if (activeElement.tagName === 'INPUT') return;
+    if (activeElement.tagName === 'TEXTAREA') return;
 
     const paths = location.pathname.split('/');
     if (paths[4] === 'photo') return;

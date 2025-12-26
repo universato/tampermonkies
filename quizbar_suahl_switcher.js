@@ -3,7 +3,7 @@
 // @name:ja      クイズバースアール店舗切り替えショートカット
 // @name:en      Quizbar Suahl Switcher: クイズバースアール店舗切り替えショートカット
 // @namespace    https://greasyfork.org/ja/users/570127
-// @version      2025.12.25.0
+// @version      2025.12.25.1
 // @description  クイズバースアールの予約カレンダー等の切り替えキーボードショートカット a:秋葉原, i:池袋, k:蒲田, o:大阪, n:名古屋, d:日, w:週
 // @description:ja クイズバースアールの予約カレンダー等の切り替えキーボードショートカット a:秋葉原, i:池袋, k:蒲田, o:大阪, n:名古屋, d:日, w:週
 // @description:en Switch Area of Quizbar Suahl (@Japan) by key shortcut
@@ -11,6 +11,7 @@
 // @match        https://airrsv.net/quizbar-suahl-*/*
 // @match        https://suahl.com/shoplist/*
 // @match        https://suahl.com/recruit/*
+// @icon         https://greasyfork.s3.us-east-2.amazonaws.com/x3nhc57m9iw500zq0ztgo6ovm1lu
 // @license      MIT
 // @grant        none
 // ==/UserScript==
